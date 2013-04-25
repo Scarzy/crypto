@@ -28,7 +28,7 @@ void arrtobin(uint8_t arr[], int len, uint8_t out[])
 		int j;
 		for(j = 0; j < 8; j++)
 		{
-			if(arr[i+j] == 1)
+			if(arr[(8*i)+j] == 1)
 			{
 				val |= (0x01 << (7-j));
 			}
