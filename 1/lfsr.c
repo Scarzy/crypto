@@ -5,6 +5,7 @@
 #define LFSR_LEN 5
 
 uint8_t buffer[] = {1,0,1,1,1};
+uint8_t taps[] = {0,0,1,0,1};
 
 void bintoarr(uint8_t bin[], int len, uint8_t out[])
 {
@@ -91,10 +92,17 @@ void initlfsr(char val)
 //	printf("\n");
 }
 
-int updatelfsr()
+void settaps(char val)
 {
-	static uint8_t taps[] = {0,0,1,0,1};
-	
+	taps[0] = (val & (0x01 << 0)) ? 1 : 0;
+	taps[1] = (val & (0x01 << 1)) ? 1 : 0;
+	taps[2] = (val & (0x01 << 2)) ? 1 : 0;
+	taps[3] = (val & (0x01 << 3)) ? 1 : 0;
+	taps[4] = (val & (0x01 << 4)) ? 1 : 0;
+}
+
+int updatelfsr()
+{	
 	int i;
 	uint8_t sum = 0;
 	for(i = 0; i < LFSR_LEN; i++)
@@ -140,24 +148,28 @@ void main()
 	filetoarr("bin",out);
 	
 	int i,j,k;
-	for(i = 0; i < 32; i++)
+	for(k = 0; k < 32; k++)
 	{
-		printf("Testing: %d\n",i);
-		initlfsr(i);
-		for(j = 0; j < FILE_LEN*8; j++)
+		settaps(k);
+		for(i = 0; i < 32; i++)
 		{
-			int rnd = updatelfsr();
-			res[j] = (out[j] + rnd) % 2;
-		}
-		if(checkmatch(res) == 1)
-		{
-			printf("Match\n");
-			printf("Decryption complete\n");
-			printbytes(res);
-			char filename[10];
-			sprintf(filename,"result%d.bin",i);
-			arrtofile(filename,res);
-			printf("File written\n");
+			printf("Testing: %d\n",i);
+			initlfsr(i);
+			for(j = 0; j < FILE_LEN*8; j++)
+			{
+				int rnd = updatelfsr();
+				res[j] = (out[j] + rnd) % 2;
+			}
+			if(checkmatch(res) == 1)
+			{
+				printf("Match\n");
+				printf("Decryption complete\n");
+				printbytes(res);
+				char filename[10];
+				sprintf(filename,"result%d-%d.bin",k,i);
+				arrtofile(filename,res);
+				printf("File written\n");
+			}
 		}
 	}
 }
