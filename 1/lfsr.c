@@ -144,27 +144,14 @@ void main()
 	{
 		printf("Testing: %d\n",i);
 		initlfsr(i);
-		for(j = 0; j < 16; j++)
+		for(j = 0; j < FILE_LEN*8; j++)
 		{
 			int rnd = updatelfsr();
 			res[j] = (out[j] + rnd) % 2;
 		}
 		if(checkmatch(res) == 1)
 		{
-			printf("Match: ");
-			for(k = 0; k < LFSR_LEN; k++)
-			{
-				printf("%d",buffer[k]);
-			}
-			printf("\n");
-			printbytes(res);
-			printf("Beginning decrypt\n");
-			initlfsr(i);
-			for(k = 0; k < FILE_LEN*8; k++)
-			{
-				int rnd = updatelfsr();
-				res[k] = (out[j] + rnd) % 2;
-			}
+			printf("Match\n");
 			printf("Decryption complete\n");
 			printbytes(res);
 			char filename[10];
