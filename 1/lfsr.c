@@ -118,12 +118,6 @@ int updatelfsr()
 	}
 	buffer[0] = sum;
 	
-//	for(i = 0; i < LFSR_LEN; i++)
-//	{
-//		printf("%d",buffer[i]);
-//	}
-//	printf("  %d\n",sum);
-	
 	return sum;
 }
 
@@ -170,22 +164,9 @@ void main()
 		settaps(k);
 		for(i = 0; i < 32; i++)
 		{
-			printf("Testing: %d\n",i);
-			initlfsr(i);
-			printf("%d\n",32);
-			for(j = 0; j < 32; j++)
-			{
-				printf("%d",updatelfsr());
-			}
-			printf("\n");
 			initlfsr(i);
 			uint8_t key[32];
 			buildkey(key,32);
-			for(j = 0; j < 32; j++)
-			{
-				printf("%d",key[j]);
-			}
-			printf("\n");
 			for(j = 0; j < FILE_LEN*8; j++)
 			{
 				int rnd = getkeybit(key,pow(2,LFSR_LEN));
@@ -193,13 +174,10 @@ void main()
 			}
 			if(checkmatch(res) == 1)
 			{
-				printf("Match\n");
-				printf("Decryption complete\n");
-				printbytes(res);
+				printf("Match - taps: %d, start: %d\n", k, i);
 				char filename[10];
 				sprintf(filename,"result%d-%d.bin",k,i);
 				arrtofile(filename,res);
-				printf("File written\n");
 			}
 		}
 	}
