@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <math.h>
 
 #define FILE_LEN 556
 #define LFSR_LEN 5
@@ -126,6 +127,22 @@ int updatelfsr()
 	return sum;
 }
 
+void buildkey(uint8_t key[], int keylen)
+{
+	int i;
+	for(i = 0; i < keylen - 1; i++)
+	{
+		key[i] = updatelfsr();
+	}
+	key[keylen-1] = (updatelfsr() == 1) ? 0 : 1;	//6 was unlikely to be the correct value, so let's try the opposite.
+}
+
+int getkeybit(uint8_t key[], int keylen)
+{
+	static int position = 0;
+	return key[(position++) % keylen];
+}
+
 int checkmatch(uint8_t res[])
 {
 	static uint8_t desired[] = {0,1,0,1,0,1,0,1,0,1,1,1,0,0,1,0};
@@ -155,9 +172,23 @@ void main()
 		{
 			printf("Testing: %d\n",i);
 			initlfsr(i);
+			printf("%d\n",32);
+			for(j = 0; j < 32; j++)
+			{
+				printf("%d",updatelfsr());
+			}
+			printf("\n");
+			initlfsr(i);
+			uint8_t key[32];
+			buildkey(key,32);
+			for(j = 0; j < 32; j++)
+			{
+				printf("%d",key[j]);
+			}
+			printf("\n");
 			for(j = 0; j < FILE_LEN*8; j++)
 			{
-				int rnd = updatelfsr();
+				int rnd = getkeybit(key,pow(2,LFSR_LEN));
 				res[j] = (out[j] + rnd) % 2;
 			}
 			if(checkmatch(res) == 1)
