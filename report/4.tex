@@ -1,1 +1,20 @@
-\section{Research}
+\section{MiFare Classic}
+
+MiFare Classic is a contactless smartcard produced to provide secure Near Field Communications (NFC).
+These are used in a number of security access cards and for small payments.
+Examples of such payment systems are bank cards and oyster cards.
+
+There are many security vulnerabilities caused by the use of NFC.
+As the connection is wireless it means that all communications can be eavesdropped upon without notice, additionally it means that an attack can be mounted to interrogate a card contained inside someones pocket, again without being observed.
+Issues of security extend beyond the wireless data transmission, as the cards power comes from the reader there is limited power available to it, as such the implementation of any security protocols must be of minimal power limiting the available designs.
+There are a number of attacks available to Mifare Classic that require both a legitimate card and a legitimate reader in order to exploit, as the attack is based on eavesdropping, however the one discussed here, based on \cite{WirelessPickpocket}, require just a legitimate card.
+
+\subsection{CRYPTO1}
+The encryption for the Mifare Classic is known as `CRYPTO1' and is provided through the use of a 48bit Linear Feedback Shift Register (LFSR).
+
+There are some weaknesses in the design of the encrytion system.
+The first of which is the use of parity bits.
+In the Mifare Classic the parity bits are calculated over the plaintext and then included in the transmission.
+This is further weakened as the card responds differently if the parity is invalid as opposed to when the data itself is invalid.
+With incorrect parity the card terminates the communications, however if all the parity bits are correct but the authentification data is invalid the card provides an error code with value "0x5".
+Another weakness in the design is due to the fact that authentifications to different memory sectors after the initial authentification are required to be encrypted.
