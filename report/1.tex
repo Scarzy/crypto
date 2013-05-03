@@ -3,3 +3,62 @@
 In order to break the LFSR encryption stage, a 5 bit LFSR was created and ran to decrypt the message.
 Initially the taps for the LFSR were taken from a precalculated list, and all initial values for the LFSR were tried until it matched the first two bytes.
 However when this produced an unexpected result all the tap variations were tried in turn, though no alternative variations were found.
+
+At this point an autocorrellation was undertaken which suggested a peak at 32 bits, rather than 31.
+This suggested that the key used to encrypt the message was 32 bits long, rather than the 31 implied by the LFSR.
+It is also worth noting that it is physically impossible for a LFSR with degree 5 is not able to produce a 32 bit long key.
+At this point it was observed that the first 16 bits produced by the LFSR matched the provided "Ur", it therefore seemed likely that a portion of the key was produced by the LFSR.
+It was then noted that the third character in the decoded message was an alphabetic character, implying that the next 8 bits of the key were also correct.
+The final 8 bits were then all attempted.
+One of the produced messages had the appropriate form for standard english, implying some form of alphabetic cipher.
+A character frequency analysis was then performed, giving reasonable character frequencies.
+
+The most frequent character appearing was 'r', implying that this would be an 'e'.
+It was then observed that the letter 'n' appeared on its own a few times and always in lower case.
+This suggested that it was an 'a'.
+
+Two words in the first sentence were then considered "gurl" and "gur".
+It seemed likely that "gu" was "th", so these characters were attempted, providing reasonable looking words.
+At this point the characters seemed to align appropriately for the alphabet to have just been rotated.
+The alphabet was filled in on the basis that it had been rotated, and provided the following final output:
+
+\begin{quote}
+Health officials believe they have the strongest evidence yet that a new respiratory illness can spread from person to person Cases of the infection may come from contact with animals and birds. However, if the virus can spread between people it poses a much more serious threat. One person in the UK is thought to have caught the infection from a relative. However, officials say the threat to the whole population remains very low. There have been nine confirmed cases of the infection around the world. You have now successfully deciphered this message.
+\end{quote}
+
+The substitutions used are shown in table \ref{tab:sub1}.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}[h]{| c | c |}
+		\hline
+		A	& N	\\ \hline
+		B	& O	\\ \hline
+		C	& P	\\ \hline
+		D	& Q	\\ \hline
+		E	& R	\\ \hline
+		F	& S	\\ \hline
+		G	& T	\\ \hline
+		H	& U	\\ \hline
+		I	& V	\\ \hline
+		J	& W	\\ \hline
+		K	& X	\\ \hline
+		L	& Y	\\ \hline
+		M	& Z	\\ \hline
+		N	& A	\\ \hline
+		O	& B	\\ \hline
+		P	& C	\\ \hline
+		Q	& D	\\ \hline
+		R	& E	\\ \hline
+		S	& F	\\ \hline
+		T	& G	\\ \hline
+		U	& H	\\ \hline
+		V	& I	\\ \hline
+		W	& J	\\ \hline
+		X	& K	\\ \hline
+		Y	& L	\\ \hline
+		Z	& M	\\ \hline
+	\end{tabular}
+	\caption{The substitutions used for question 1}
+	\label{tab:sub1}
+\end{table}
