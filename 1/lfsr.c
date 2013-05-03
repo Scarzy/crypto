@@ -121,14 +121,19 @@ int updatelfsr()
 	return sum;
 }
 
-void buildkey(uint8_t key[], int keylen)
+void buildkey(uint8_t key[], int keylen, uint8_t fixval)
 {
 	int i;
-	for(i = 0; i < keylen - 1; i++)
+	for(i = 0; i < keylen - 8; i++)
 	{
 		key[i] = updatelfsr();
 	}
-	key[keylen-1] = (updatelfsr() == 1) ? 0 : 1;	//6 was unlikely to be the correct value, so let's try the opposite.
+	uint8_t fix[8];
+	bintoarr(&fixval,1,fix);
+	for(i = keylen - 8; i < keylen; i++)
+	{
+		key[i] = fix[i%(keylen-8)];
+	}
 }
 
 int getkeybit(uint8_t key[], int keylen)
@@ -172,34 +177,38 @@ void main()
 	filetoarr("bin",out);
 	
 	int autores[FILE_LEN * 8];
-	autocorrellate(out, FILE_LEN * 8, autores);
+//	autocorrellate(out, FILE_LEN * 8, autores);
 	int i,j,k;
-	for(i = 0; i < FILE_LEN * 8; i++)
+//	for(i = 0; i < FILE_LEN * 8; i++)
+//	{
+//		printf("%d: %d\n", i, autores[i]);
+//	}
+//	return;
+	uint8_t l = 0;
+	do
 	{
-		printf("%d: %d\n", i, autores[i]);
-	}
-	return;
-	for(k = 0; k < 32; k++)
-	{
-		settaps(k);
-		for(i = 0; i < 32; i++)
+		for(k = 0; k < 32; k++)
 		{
-			initlfsr(i);
-			uint8_t key[32];
-			buildkey(key,32);
-			for(j = 0; j < FILE_LEN*8; j++)
+			settaps(k);
+			for(i = 0; i < 32; i++)
 			{
-				int rnd = getkeybit(key,pow(2,LFSR_LEN));
-				res[j] = (out[j] + rnd) % 2;
-			}
-			if(checkmatch(res) == 1)
-			{
-				printf("Match - taps: %d, start: %d\n", k, i);
-				char filename[10];
-				sprintf(filename,"result%d-%d.bin",k,i);
-				arrtofile(filename,res);
+				initlfsr(i);
+				uint8_t key[32];
+				buildkey(key,32,l);
+				for(j = 0; j < FILE_LEN*8; j++)
+				{
+					int rnd = getkeybit(key,pow(2,LFSR_LEN));
+					res[j] = (out[j] + rnd) % 2;
+				}
+				if(checkmatch(res) == 1)
+				{
+					printf("Match - taps: %d, start: %d\n", k, i);
+					char filename[10];
+					sprintf(filename,"result%d-%d-%d.bin",k,i,l);
+					arrtofile(filename,res);
+				}
 			}
 		}
-	}
+	} while (++l != 0);
 }
 
