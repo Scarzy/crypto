@@ -151,6 +151,19 @@ int checkmatch(uint8_t res[])
 	return 1;
 }
 
+void autocorrellate(uint8_t vals[], int vallen, int rets[])
+{
+	int i, j;
+	for(i = 0; i < vallen; i++)	//The shift applied
+	{
+		rets[i] = 0;
+		for(j = i; j < vallen; j++)	//The position in the array
+		{
+			rets[i] += ((vals[i] + vals[j]) % 2);
+		}
+	}
+}
+
 void main()
 {
 	uint8_t out[FILE_LEN * 8];
@@ -158,7 +171,14 @@ void main()
 	
 	filetoarr("bin",out);
 	
+	int autores[FILE_LEN * 8];
+	autocorrellate(out, FILE_LEN * 8, autores);
 	int i,j,k;
+	for(i = 0; i < FILE_LEN * 8; i++)
+	{
+		printf("%d: %d\n", i, autores[i]);
+	}
+	return;
 	for(k = 0; k < 32; k++)
 	{
 		settaps(k);
