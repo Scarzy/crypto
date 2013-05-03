@@ -6,6 +6,6 @@ all:
 	pdflatex report
 
 clean:
-	rm -f report.pdf *.log *.aux
+	rm -f report.pdf *.log *.aux *.bbl *.blg
 
 .PHONY: all
