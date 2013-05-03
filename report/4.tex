@@ -9,7 +9,6 @@ As the connection is wireless it means that all communications can be eavesdropp
 Issues of security extend beyond the wireless data transmission, as the cards power comes from the reader there is limited power available to it, as such the implementation of any security protocols must be of minimal power limiting the available designs.
 There are a number of attacks available to Mifare Classic that require both a legitimate card and a legitimate reader in order to exploit, as the attack is based on eavesdropping, however the one discussed here, based on \cite{WirelessPickpocket}, require just a legitimate card.
 
-\subsection{CRYPTO1}
 The encryption for the Mifare Classic is known as `CRYPTO1' and is provided through the use of a 48bit Linear Feedback Shift Register (LFSR).
 
 There are some weaknesses in the design of the encrytion system.
@@ -18,3 +17,20 @@ In the Mifare Classic the parity bits are calculated over the plaintext and then
 This is further weakened as the card responds differently if the parity is invalid as opposed to when the data itself is invalid.
 With incorrect parity the card terminates the communications, however if all the parity bits are correct but the authentification data is invalid the card provides an error code with value "0x5".
 Another weakness in the design is due to the fact that authentifications to different memory sectors after the initial authentification are required to be encrypted.
+A third weakness is due to the fact that for any measurable security there needs to be some randomness in the initialisation of the LFSR.
+There are not many available sources of randomness, and the easiest one to use is the boot time of the card.
+This is exploitable as a accurately timed reader can control the power up time of the card and hence generate the desired internal state of the mifare card.
+Additionally, it takes only about $30\mu s$ for the mifare card to discharge all capaitances, meaning that multiple, accurately timed queries can be made in quick succession.
+
+\subsection{Nonce Variance Attack}
+This works by varying the authentification challenge that the reader sends to the mifare card $n_{R}$.
+A reader with accurate timing can cause the mifare card to load to provide the same challenge to the reader every time $n_{T}$.
+The reader then provides the $n_{R}$ challenge while attempting to guess the parity bits.
+The attacker keeps on running these authentification sessions until the correct parity bits are guessed.
+When the parity bits are guessed correctly, the internal state of the LFSR is known to be $\alpha_{64}$, i.e. to have clocked 64 times from the initial state.
+Another authentification session is then run changing only the last bit in $n_{R}$.
+The internal state of the LFSR with this new authentification session is known to be $\alpha_{64} \oplus 1$, i.e. $\alpha_{64}$ with the last bit flipped.
+The changing of this last bit gives the attacker knowledge of if the last bit of $n_{R}$ affects the encryption of the follwing bit.
+Knowing this it is possible for the attacker to determine if the two encryptions of the stream cipher are the same, $f(\alpha_{64}) = f(\alpha_{64} \oplus 1)$.
+There are very few cases where these functions differ, approximately 9.4\%, which given that only 20 bits of each value passed into the encryption function $f()$ are used, can be generated easily.
+The attacker can now re-run this process a number of times until a situation is found where $f(\alpha_{64}) \ne f(\alpha_{64} \oplus 1)$, at which point the attacker can search all of the possible states until they discover the state of the stream cipher.
