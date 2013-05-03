@@ -202,7 +202,7 @@ void main()
 				}
 				if(checkmatch(res) == 1)
 				{
-					printf("Match - taps: %d, start: %d\n", k, i);
+					printf("Match - taps: %d, start: %d, rand: %d\n", k, i, l);
 					char filename[10];
 					sprintf(filename,"result%d-%d-%d.bin",k,i,l);
 					arrtofile(filename,res);
