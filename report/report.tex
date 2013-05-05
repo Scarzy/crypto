@@ -1,4 +1,5 @@
 \documentclass[a4paper,12pt]{article}
+\usepackage[final]{pdfpages}
 \usepackage[cm]{fullpage}
 \usepackage{float}
 
@@ -17,5 +18,8 @@
 
 \bibliographystyle{plain}
 \bibliography{sources}
+
+\appendix
+\includepdf[pages=-, fitpaper=true, pagecommand={\thispagestyle{plain}}]{./hams.pdf}
 
 \end{document}
