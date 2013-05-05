@@ -1,6 +1,7 @@
 \section{Hamming Codes}
 
 \subsection{a}
+\label{sec:2a}
 The first steps taken were to determine if the functions were reducible or not, as reducible functions can not be generator functions.
 
 \subsubsection{i}
@@ -131,5 +132,49 @@ $
 $
 
 \subsection{b}
-The first observation we make is that $n = 63$, which leads us to determine that \\ $m = log_{2}(n+1) \\ m = log_{2}(64) \\ m = 6$ \\
+The first observation we make is that $n = 63$, which leads us to determine that \\ $ n = 2^{m}-1 \\ m = log_{2}(n+1) \\ m = log_{2}(64) \\ m = 6$ \\
 Which allows us to prove that \\ $k = 2^{m} - m - 1 \\ k = 2^{6} - 6 - 1 \\ k = 64 - 7 \\ k = 57$ \\
+Using these observations, and the generator matrix from \ref{sec:2a}, it is possible to produce the generator and parity check matrices in systematic form.
+These two matrices are included on A3 paper at the end of this document.
+$H$ was constructed first, by placing all the elements produced by the LFSR with more than 1 bit set in each column to form $P^{T}$.
+The $m \times m$ identity matrix was then appended to the end.
+As all the values with just a single bit set had been removed from the LFSR sequence there was no reoccurance of a column.
+$G$ was constructed by creating the $k \times k$ identity matrix, then appending $P$.
+
+\subsection{c}
+These can be determined to be valid codewords or not by multiplying the codeword by the transpose of the parity check matrix.
+This will give us the syndrome, $S$.
+If this syndrome is equal to 0, then it is a valid codeword.
+
+\subsubsection{i}
+$m1$ = 101001111000000000000000000000000000000000000000000000000000000	\\
+
+$S = m1 \times H^{T}$ \\
+\[ S = \left[ \begin{array}{cccccc} 0 & 1 & 0 & 0 & 0 & 0 \end{array} \right] \]
+
+This shows that $m1$ is not a valid codeword, however potentially could be one with a single bit error.
+This bit error could be corrected to give the valid codeword:
+
+\noindent $m1$ = 101001111000000000000000000000000000000000000000000000000010000
+
+\subsubsection{ii}
+$m2$ = 100001100000000000000000000000000000000000000000000000001000011	\\
+
+$S = m2 \times H^{T}$ \\
+\[ S = \left[ \begin{array}{cccccc} 0 & 0 & 0 & 0 & 0 & 0 \end{array} \right] \]
+
+This shows that $m2$ is a valid codeword.
+
+\subsubsection{iii}
+$m3$ = 100001100000000000000000000010000000000000000000000000001000011	\\
+
+$S = m3 \times H^{T}$ \\
+\[ S = \left[ \begin{array}{cccccc} 1 & 1 & 1 & 1 & 1 & 1 \end{array} \right] \]
+
+This shows that $m3$ is not a valid codeword.
+The single bit error that this would suggest to correct would give:
+
+$m3$ = 000001100000000000000000000010000000000000000000000000001000011
+
+This is not the same as $m2$, although there is only 1 bit difference between the original $m2$ and $m3$.
+This suggests that I have a parity check matrix that does not suit the original $G$ used to encode these messages.
