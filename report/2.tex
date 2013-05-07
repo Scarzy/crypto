@@ -3,7 +3,7 @@
 \subsection{a}
 \label{sec:2a}
 The first steps taken were to determine if the functions were reducible or not, as reducible functions can not be generator functions.
-This is because the generators must produce a cyclic code with a minimum hamming distance of 3, and only primitive polynomials cen provide this.
+This is because the generators must produce a cyclic code with a minimum hamming distance of 3, and only primitive polynomials can provide this.
 All primitive polynomials are irreducible by definition.
 
 \subsubsection{i}
@@ -40,7 +40,7 @@ $f_{4}(x) = x^{6} + x^{5} + x^{4} + x^{3} + x^{2} + x + 1$ \\
 
 \subsubsection{v}
 
-$f_{2}(x) = x^{6} + x + 1$ \\
+$f_{5}(x) = x^{6} + x + 1$ \\
 
 \noindent This function is irreducible.
 
@@ -57,7 +57,7 @@ h(x) = \frac{x^{63} + 1}{x^{6} + x + 1}$\\
 
 It was required that this division prove successful, as $g(x)$ has to be a prime factor of $x^{n} + 1$.
 This division was successful, and the division can be seen at the end of this document.
-$G$ was constructed by continuosly shifting the values from the generator polynomial $g(x)$ along.
+$G$ was constructed by continuously shifting the values from the generator polynomial $g(x)$.
 $H$ was constructed by shifting the values from the parity check polynomial $h(x)$ along.
 These two matrices are included on A3 paper at the end of this document.
 
@@ -65,36 +65,42 @@ These two matrices are included on A3 paper at the end of this document.
 These can be determined to be valid codewords or not by multiplying the codeword by the transpose of the parity check matrix.
 This will give us the syndrome, $S$.
 If this syndrome is equal to 0, then it is a valid codeword.
+If not, the syndrome gives the position of the incorrect bit, which when inverted produces a valid codeword.
 
 \subsubsection{i}
 $m1$ = 101001111000000000000000000000000000000000000000000000000000000	\\
 
 $S = m1 \times H^{T}$ \\
-\[ S = \left[ \begin{array}{cccccc} 0 & 1 & 0 & 0 & 0 & 0 \end{array} \right] \]
+\[ S = \left[ \begin{array}{cccccc} 1 & 0 & 1 & 1 & 0 & 1 \end{array} \right] \]
 
 This shows that $m1$ is not a valid codeword, however potentially could be one with a single bit error.
 This bit error could be corrected to give the valid codeword:
 
-\noindent $m1$ = 101001111000000000000000000000000000000000000000000000000010000
+\noindent $m1$ = 101001111000000000000000000000000000010000000000000000000000000
 
 \subsubsection{ii}
 $m2$ = 100001100000000000000000000000000000000000000000000000001000011	\\
 
 $S = m2 \times H^{T}$ \\
-\[ S = \left[ \begin{array}{cccccc} 0 & 0 & 0 & 0 & 0 & 0 \end{array} \right] \]
+\[ S = \left[ \begin{array}{cccccc} 0 & 0 & 1 & 1 & 0 & 1 \end{array} \right] \]
 
-This shows that $m2$ is a valid codeword.
+This shows that $m2$ is not a valid codeword, however potentially could be one with a single bit error.
+This bit error could be corrected to give the valid codeword:
+
+$m2$ = 100001100000000000000000000000000000000000001000000000001000011	\\
 
 \subsubsection{iii}
 $m3$ = 100001100000000000000000000010000000000000000000000000001000011	\\
 
 $S = m3 \times H^{T}$ \\
-\[ S = \left[ \begin{array}{cccccc} 1 & 1 & 1 & 1 & 1 & 1 \end{array} \right] \]
+\[ S = \left[ \begin{array}{cccccc} 0 & 0 & 0 & 0 & 1 & 1 \end{array} \right] \]
 
-This shows that $m3$ is not a valid codeword.
-The single bit error that this would suggest to correct would give:
+This shows that $m2$ is not a valid codeword, however potentially could be one with a single bit error.
+This bit error could be corrected to give the valid codeword:
 
-$m3$ = 000001100000000000000000000010000000000000000000000000001000011
+$m3$ = 100001100000000000000000000010000000000000000000000000001000001
 
-This is not the same as $m2$, although there is only 1 bit difference between the original $m2$ and $m3$.
-This suggests that I have a parity check matrix that does not suit the original $G$ used to encode these messages.
+None of the code words were valid, however potentially were a single bit different to one.
+Although there was a difference of only 1 bit between $m2$ and $m3$, they did not produce the same corrected code word.
+This implies that the bit change between the two introduced a second error into one of them.
+As this hamming code can only correct a single bit error, a second error would cause it to correct to a different code word.
