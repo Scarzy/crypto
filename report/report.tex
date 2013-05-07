@@ -2,6 +2,7 @@
 \usepackage[final]{pdfpages}
 \usepackage[cm]{fullpage}
 \usepackage{float}
+\usepackage{url}
 
 \author{Thomas Scarsbrook}
 \date{\today}
@@ -20,6 +21,7 @@
 \bibliography{sources}
 
 \appendix
+\includepdf[pages=-, fitpaper=true, pagecommand={\thispagestyle{plain}}]{./hammingpolynomial.pdf}
 \includepdf[pages=-, fitpaper=true, pagecommand={\thispagestyle{plain}}]{./hams.pdf}
 
 \end{document}

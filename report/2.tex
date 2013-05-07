@@ -3,143 +3,63 @@
 \subsection{a}
 \label{sec:2a}
 The first steps taken were to determine if the functions were reducible or not, as reducible functions can not be generator functions.
+This is because the generators must produce a cyclic code with a minimum hamming distance of 3, and only primitive polynomials cen provide this.
+All primitive polynomials are irreducible by definition.
 
 \subsubsection{i}
-$
-f_{1}(x) = x^{6} + x^{3} + x^{2} + x + 1 \\
-f_{1}(0) = 0^{6} + 0^{3} + 0^{2} + 0 + 1 \\
-f_{1}(0) = 1	\\
-f_{1}(1) = 1^{6} + 1^{3} + 1^{2} + 1 + 1 \\
-f_{1}(1) = 0 + 1 + 0 + 1 + 1	\\
-f_{1}(1) = 1	\\
-$
 
-This function is irreducible, as both $f_{1}(0)$ and $f_{1}(1)$ equal 1.
+$f_{1}(x) = x^{6} + x^{3} + x^{2} + x + 1$ \\
+
+\noindent $f_{1}(x)$ is reducible, and can be factored to: \\
+
+\noindent $f_{1}(x) = (x^{2} + x + 1)(x^{4} + x^{3} + 1)$
 
 \subsubsection{ii}
-$
-f_{2}(x) = x^{6} + x^{5} + x^{4} + x^{3} + 1 	\\
-f_{2}(0) = 0^{6} + 0^{5} + 0^{4} + 0^{3} + 1 	\\
-f_{2}(0) = 1	\\
-f_{2}(1) = 1^{6} + 1^{5} + 1^{4} + 1^{3} + 1 	\\
-f_{2}(1) = 0 + 1 + 0 + 1 + 1 	\\
-f_{2}(1) = 1 	\\
-$
 
-This function is irreducible, as both $f_{2}(0)$ and $f_{2}(1)$ equal 1.
+$f_{2}(x) = x^{6} + x^{5} + x^{4} + x^{3} + 1$ \\
+
+\noindent $f_{2}(x)$ is reducible, and can be factored to: \\
+
+\noindent $f_{2}(x) = (x^{2} + x + 1)(x^{4} + x + 1)$
 
 \subsubsection{iii}
-$
-f_{3}(x) = x^{6} + x^{5} + x 	\\
-f_{3}(0) = 0^{6} + 0^{5} + 0 	\\
-f_{3}(0) = 0	\\
-f_{3}(1) = 1^{6} + 1^{5} + 1 	\\
-f_{3}(1) = 0 + 1 + 1 	\\
-f_{3}(1) = 0 	\\
-$
 
-This function is irreducible, as both $f_{2}(0)$ and $f_{2}(1)$ equal 1.??
+$f_{3}(x) = x^{6} + x^{5} + x$ \\
+
+\noindent $f_{3}(x)$ is reducible, and can be factored to: \\
+
+\noindent $f_{3}(x) = x(x^{2} + x + 1)(x^{3} + x + 1)$
 
 \subsubsection{iv}
-$
-f_{4}(x) = x^{6} + x^{5} + x^{4} + x^{3} + x^{2} + x + 1 	\\
-f_{4}(0) = 0^{6} + 0^{5} + 0^{4} + 0^{3} + 0^{2} + 0 + 1 	\\
-f_{4}(0) = 1	\\
-f_{4}(1) = 1^{6} + 1^{5} + 1^{4} + 1^{3} + 1^{2} + 1 + 1 	\\
-f_{4}(1) = 0 + 1 + 0 + 1  + 0 + 1 + 1 	\\
-f_{4}(1) = 0 	\\
-$
 
-This function is reducible, as both $f_{4}(0)$ and $f_{4}(1)$ are different.
+$f_{4}(x) = x^{6} + x^{5} + x^{4} + x^{3} + x^{2} + x + 1$ \\
+
+\noindent $f_{4}(x)$ is reducible, and can be factored to: \\
+
+\noindent $f_{4}(x) = (x^{3} + x + 1)(x^{3} + x^{2} + 1)$
 
 \subsubsection{v}
-$
-f_{2}(x) = x^{6} + x + 1 	\\
-f_{2}(0) = 0^{6} + 0 + 1 	\\
-f_{2}(0) = 1	\\
-f_{2}(1) = 1^{6} + 1 + 1 	\\
-f_{2}(1) = 0 + 1 + 1 	\\
-f_{2}(1) = 0 	\\
-$
 
-This function is reducible, as both $f_{5}(0)$ and $f_{5}(1)$ are different.
+$f_{2}(x) = x^{6} + x + 1$ \\
 
-$f_{1}(x)$ is an appropriate generator polynomial, and can be used to generate the following sequence:
-$
-111111	\\
-011111	\\
-101111	\\
-010111	\\
-101011	\\
-110101	\\
-111010	\\
-011101	\\
-001110	\\
-000111	\\
-100011	\\
-110001	\\
-011000	\\
-001100	\\
-100110	\\
-110011	\\
-111001	\\
-011100	\\
-101110	\\
-110111	\\
-011011	\\
-001101	\\
-000110	\\
-000011	\\
-000001	\\
-100000	\\
-110000	\\
-111000	\\
-111100	\\
-011110	\\
-001111	\\
-100111	\\
-010011	\\
-001001	\\
-100100	\\
-010010	\\
-101001	\\
-010100	\\
-101010	\\
-010101	\\
-001010	\\
-100101	\\
-110010	\\
-011001	\\
-101100	\\
-010110	\\
-001011	\\
-000101	\\
-000010	\\
-100001	\\
-010000	\\
-001000	\\
-000100	\\
-100010	\\
-010001	\\
-101000	\\
-110100	\\
-011010	\\
-101101	\\
-110110	\\
-111011	\\
-111101	\\
-111110	\\
-$
+\noindent This function is irreducible.
+
+$f_{5}(x)$ is an appropriate generator polynomial.
+All the factors shown here were sourced from \cite{website:Polynomials}.
 
 \subsection{b}
 The first observation we make is that $n = 63$, which leads us to determine that \\ $ n = 2^{m}-1 \\ m = log_{2}(n+1) \\ m = log_{2}(64) \\ m = 6$ \\
 Which allows us to prove that \\ $k = 2^{m} - m - 1 \\ k = 2^{6} - 6 - 1 \\ k = 64 - 7 \\ k = 57$ \\
-Using these observations, and the generator matrix from \ref{sec:2a}, it is possible to produce the generator and parity check matrices in systematic form.
+Using these observations, and the generator polynomial from \ref{sec:2a}, it is possible to produce the generator and parity check matrices.
+The parity check polynomial $h(x)$ was constructed first, by calculating: \\
+$h(x) = \frac{x^{n} + 1}{g(x)} \\ 
+h(x) = \frac{x^{63} + 1}{x^{6} + x + 1}$\\
+
+It was required that this division prove successful, as $g(x)$ has to be a prime factor of $x^{n} + 1$.
+This division was successful, and the division can be seen at the end of this document.
+$G$ was constructed by continuosly shifting the values from the generator polynomial $g(x)$ along.
+$H$ was constructed by shifting the values from the parity check polynomial $h(x)$ along.
 These two matrices are included on A3 paper at the end of this document.
-$H$ was constructed first, by placing all the elements produced by the LFSR with more than 1 bit set in each column to form $P^{T}$.
-The $m \times m$ identity matrix was then appended to the end.
-As all the values with just a single bit set had been removed from the LFSR sequence there was no reoccurance of a column.
-$G$ was constructed by creating the $k \times k$ identity matrix, then appending $P$.
 
 \subsection{c}
 These can be determined to be valid codewords or not by multiplying the codeword by the transpose of the parity check matrix.
