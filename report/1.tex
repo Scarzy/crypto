@@ -6,19 +6,23 @@ However when this produced an unexpected result all the tap variations were trie
 
 At this point an autocorrellation was undertaken which suggested a peak at 32 bits, rather than 31.
 This suggested that the key used to encrypt the message was 32 bits long, rather than the 31 implied by the LFSR.
-It is also worth noting that it is physically impossible for a LFSR with degree 5 is not able to produce a 32 bit long key.
-At this point it was observed that the first 16 bits produced by the LFSR matched the provided "Ur", it therefore seemed likely that a portion of the key was produced by the LFSR.
+It is also worth noting that it is physically impossible for a LFSR with degree 5 to produce a 32 bit long key.
+At this point it was observed that the first 16 bits produced by the LFSR matched the provided ``Ur'', it therefore seemed likely that a portion of the key was produced by the LFSR.
 It was then noted that the third character in the decoded message was an alphabetic character, implying that the next 8 bits of the key were also correct.
 The final 8 bits were then all attempted.
 One of the produced messages had the appropriate form for standard english, implying some form of alphabetic cipher.
+The text available at this point was:
+\begin{quote}
+Urnygu bssvpvnyf oryvrir gurl unir gur fgebatrfg rivqrapr lrg gung n arj erfcvengbel vyyarff pna fcernq sebz crefba gb crefba Pnfrf bs gur vasrpgvba znl pbzr sebz pbagnpg jvgu navznyf naq oveqf. Ubjrire, vs gur ivehf pna fcernq orgjrra crbcyr vg cbfrf n zhpu zber frevbhf guerng. Bar crefba va gur HX vf gubhtug gb unir pnhtug gur vasrpgvba sebz n eryngvir. Ubjrire, bssvpvnyf fnl gur guerng gb gur jubyr cbchyngvba erznvaf irel ybj. Gurer unir orra avar pbasvezrq pnfrf bs gur vasrpgvba nebhaq gur jbeyq. Lbh unir abj fhpprffshyyl qrpvcurerq guvf zrffntr.
+\end{quote}
 A character frequency analysis was then performed, giving reasonable character frequencies.
 
-The most frequent character appearing was 'r', implying that this would be an 'e'.
-It was then observed that the letter 'n' appeared on its own a few times and always in lower case.
-This suggested that it was an 'a'.
+The most frequent character appearing was `r', implying that this would be an `e'.
+It was then observed that the letter `n' appeared on its own a few times and always in lower case.
+This suggested that it was an `a'.
 
-Two words in the first sentence were then considered "gurl" and "gur".
-It seemed likely that "gu" was "th", so these characters were attempted, providing reasonable looking words.
+Two words in the first sentence were then considered ``gurl'' and ``gur''.
+It seemed likely that ``gu'' was ``th'', so these characters were attempted, providing reasonable looking words.
 At this point the characters seemed to align appropriately for the alphabet to have just been rotated.
 The alphabet was filled in on the basis that it had been rotated, and provided the following final output:
 

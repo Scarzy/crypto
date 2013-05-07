@@ -15,7 +15,7 @@ There are some weaknesses in the design of the encrytion system.
 The first of which is the use of parity bits.
 In the Mifare Classic the parity bits are calculated over the plaintext and then included in the transmission.
 This is further weakened as the card responds differently if the parity is invalid as opposed to when the data itself is invalid.
-With incorrect parity the card terminates the communications, however if all the parity bits are correct but the authentification data is invalid the card provides an error code with value "0x5".
+With incorrect parity the card terminates the communications, however if all the parity bits are correct but the authentification data is invalid the card provides an error code with value ``0x5''.
 Another weakness in the design is due to the fact that authentifications to different memory sectors after the initial authentification are required to be encrypted.
 A third weakness is due to the fact that for any measurable security there needs to be some randomness in the initialisation of the LFSR.
 There are not many available sources of randomness, and the easiest one to use is the boot time of the card.
